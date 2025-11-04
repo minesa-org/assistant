@@ -6,7 +6,6 @@
 	"scripts": {
 		"build": "tsc",
 		"register": "tsx scripts/register.ts",
-		"start": "npm run register && node dist/index.js",
 		"production": "vercel --prod"
 	},
 	"keywords": [
