@@ -16,10 +16,20 @@ const button: MiniInteractionCommand = {
 		.setDescription("This will show button")
 		.setContexts([CommandContext.Guild])
 		.setIntegrationTypes([IntegrationType.GuildInstall])
+		.addStringOption((option) =>
+			option
+				.setName("text")
+				.setDescription("Write some text")
+				.setRequired(false),
+		)
 		.toJSON(),
 
 	handler: async (interaction: CommandInteraction) => {
-		const response = "Tap to button";
+		const { options } = interaction;
+
+		const text = options.getString("text");
+
+		const response = text ? `Tap to button: ${text}` : "Tap to button";
 
 		const button_1 = new ButtonBuilder()
 			.setCustomId("button:btn:primary")
