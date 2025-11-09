@@ -4,7 +4,6 @@
 		"module": "NodeNext",
 		"moduleResolution": "NodeNext",
 		"outDir": "dist",
-		"rootDir": "src",
 		"strict": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
@@ -13,6 +12,6 @@
 		"allowSyntheticDefaultImports": true,
 		"types": ["node"]
 	},
-	"include": ["src/**/*.ts"],
+	"include": ["src/**/*.ts", "api/**/*.ts"],
 	"exclude": ["dist", "node_modules"]
 }

@@ -4,6 +4,7 @@
 	"description": "Mini-Interaction <3",
 	"main": "index.js",
 	"scripts": {
+		"mi-latest": "npm i @minesa-org/mini-interaction@latest",
 		"build": "tsc",
 		"register": "tsx scripts/register.ts",
 		"production": "vercel --prod"
@@ -23,6 +24,7 @@
 		"typescript": "^5.9.3"
 	},
 	"dependencies": {
-		"@minesa-org/mini-interaction": "^0.1.2"
+		"@minesa-org/mini-interaction": "^0.1.3",
+		"mongodb": "^7.0.0"
 	}
 }

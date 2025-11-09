@@ -13,5 +13,7 @@
 			"maxDuration": 10,
 			"includeFiles": "dist/**"
 		}
-	}
+	},
+	"cleanUrls": true,
+	"trailingSlash": false
 }
