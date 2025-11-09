@@ -1,19 +1,13 @@
 {
-	"buildCommand": "npm run build",
 	"functions": {
 		"api/interactions.ts": {
-			"maxDuration": 10,
-			"includeFiles": "dist/**"
+			"maxDuration": 10
 		},
 		"api/discord-oauth-callback.ts": {
-			"maxDuration": 10,
-			"includeFiles": "dist/**"
+			"maxDuration": 10
 		},
 		"api/get-oauth-url.ts": {
-			"maxDuration": 10,
-			"includeFiles": "dist/**"
+			"maxDuration": 10
 		}
-	},
-	"cleanUrls": true,
-	"trailingSlash": false
+	}
 }
