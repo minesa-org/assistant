@@ -13,11 +13,5 @@
 			"maxDuration": 10,
 			"includeFiles": "dist/**"
 		}
-	},
-	"rewrites": [
-		{
-			"source": "/",
-			"destination": "/public/index.html"
-		}
-	]
+	}
 }
