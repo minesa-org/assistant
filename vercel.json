@@ -1,4 +1,5 @@
 {
+	"buildCommand": "npm run build",
 	"rewrites": [
 		{
 			"source": "/",
@@ -11,13 +12,16 @@
 			"includeFiles": "index.html"
 		},
 		"api/interactions.ts": {
-			"maxDuration": 10
+			"maxDuration": 10,
+			"includeFiles": "dist/**"
 		},
 		"api/discord-oauth-callback.ts": {
-			"maxDuration": 10
+			"maxDuration": 10,
+			"includeFiles": "dist/**"
 		},
 		"api/get-oauth-url.ts": {
-			"maxDuration": 10
+			"maxDuration": 10,
+			"includeFiles": "dist/**"
 		}
 	}
 }
