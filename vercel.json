@@ -18,10 +18,6 @@
 		"api/discord-oauth-callback.ts": {
 			"maxDuration": 10,
 			"includeFiles": "{dist/**,public/pages/**}"
-		},
-		"api/get-oauth-url.ts": {
-			"maxDuration": 10,
-			"includeFiles": "dist/**"
 		}
 	}
 }

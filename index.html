@@ -6,7 +6,7 @@
 			name="viewport"
 			content="width=device-width, initial-scale=1.0"
 		/>
-		<title>Assistant App - Discord Linked Roles</title>
+		<title>Redirecting...</title>
 		<style>
 			* {
 				margin: 0;
@@ -15,274 +15,58 @@
 			}
 
 			body {
+				background: #000;
+				color: #fff;
 				font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-				background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 				min-height: 100vh;
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				padding: 20px;
 			}
 
 			.container {
-				background: white;
-				border-radius: 20px;
-				box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-				max-width: 600px;
-				width: 100%;
-				padding: 40px;
 				text-align: center;
 			}
 
-			.logo {
-				font-size: 64px;
-				margin-bottom: 20px;
+			.spinner {
+				width: 50px;
+				height: 50px;
+				border: 4px solid rgba(255, 255, 255, 0.1);
+				border-top-color: #fff;
+				border-radius: 50%;
+				animation: spin 1s linear infinite;
+				margin: 0 auto 20px;
+			}
+
+			@keyframes spin {
+				to {
+					transform: rotate(360deg);
+				}
 			}
 
 			h1 {
-				color: #5865f2;
-				font-size: 32px;
-				margin-bottom: 10px;
-			}
-
-			.subtitle {
-				color: #666;
-				font-size: 18px;
-				margin-bottom: 30px;
-			}
-
-			.info-box {
-				background: #f0f4ff;
-				border-left: 4px solid #5865f2;
-				padding: 20px;
-				margin: 20px 0;
-				text-align: left;
-				border-radius: 8px;
-			}
-
-			.info-box h3 {
-				color: #5865f2;
-				margin-bottom: 10px;
-				font-size: 18px;
-			}
-
-			.info-box p {
-				color: #444;
-				line-height: 1.6;
-				margin-bottom: 10px;
-			}
-
-			.info-box ul {
-				margin-left: 20px;
-				color: #444;
-				line-height: 1.8;
-			}
-
-			.connect-button {
-				display: inline-block;
-				background: #5865f2;
-				color: white;
-				padding: 16px 40px;
-				border-radius: 8px;
-				text-decoration: none;
-				font-size: 18px;
-				font-weight: 600;
-				margin: 20px 0;
-				transition: all 0.3s ease;
-				box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
-			}
-
-			.connect-button:hover {
-				background: #4752c4;
-				transform: translateY(-2px);
-				box-shadow: 0 6px 20px rgba(88, 101, 242, 0.6);
-			}
-
-			.features {
-				display: grid;
-				grid-template-columns: 1fr;
-				gap: 15px;
-				margin: 30px 0;
-				text-align: left;
-			}
-
-			.feature {
-				background: #f8f9fa;
-				padding: 15px;
-				border-radius: 8px;
-				display: flex;
-				align-items: center;
-				gap: 15px;
-			}
-
-			.feature-icon {
-				font-size: 32px;
-				flex-shrink: 0;
-			}
-
-			.feature-text {
-				flex: 1;
-			}
-
-			.feature-text h4 {
-				color: #333;
-				margin-bottom: 5px;
-				font-size: 16px;
-			}
-
-			.feature-text p {
-				color: #666;
-				font-size: 14px;
-				line-height: 1.4;
-			}
-
-			.footer {
-				margin-top: 30px;
-				padding-top: 20px;
-				border-top: 1px solid #e0e0e0;
-				color: #888;
-				font-size: 14px;
-			}
-
-			.warning {
-				background: #fff3cd;
-				border-left: 4px solid #ffc107;
-				padding: 15px;
-				margin: 20px 0;
-				border-radius: 8px;
-				text-align: left;
-			}
-
-			.warning p {
-				color: #856404;
-				margin: 0;
-			}
-
-			@media (max-width: 600px) {
-				.container {
-					padding: 30px 20px;
-				}
-
-				h1 {
-					font-size: 24px;
-				}
-
-				.subtitle {
-					font-size: 16px;
-				}
+				font-size: 24px;
+				font-weight: 400;
+				letter-spacing: 2px;
 			}
 		</style>
 	</head>
 	<body>
 		<div class="container">
-			<div class="logo">🤖</div>
-			<h1>Assistant App</h1>
-			<p class="subtitle">
-				Connect your Discord account to unlock linked roles
-			</p>
-
-			<div class="info-box">
-				<h3>📋 What is this?</h3>
-				<p>
-					This app uses Discord's Linked Roles feature to verify your
-					assistant status. By connecting your account, you can
-					automatically receive roles based on your verified status.
-				</p>
-			</div>
-
-			<div class="features">
-				<div class="feature">
-					<div class="feature-icon">🔒</div>
-					<div class="feature-text">
-						<h4>Secure Authentication</h4>
-						<p>
-							Uses Discord's official OAuth2 for safe and secure
-							authorization
-						</p>
-					</div>
-				</div>
-				<div class="feature">
-					<div class="feature-icon">⚡</div>
-					<div class="feature-text">
-						<h4>Instant Updates</h4>
-						<p>
-							Your linked role metadata is updated immediately
-							after connection
-						</p>
-					</div>
-				</div>
-				<div class="feature">
-					<div class="feature-icon">🎯</div>
-					<div class="feature-text">
-						<h4>Automatic Roles</h4>
-						<p>
-							Receive server roles automatically based on your
-							verified status
-						</p>
-					</div>
-				</div>
-			</div>
-
-			<a
-				href="#"
-				id="connectButton"
-				class="connect-button"
-			>
-				🔗 Connect with Discord
-			</a>
-
-			<div class="warning">
-				<p>
-					<strong>Note:</strong> You must have your assistant status
-					set by an administrator before connecting. Use the
-					<code>/view-assistant</code> command in Discord to check
-					your current status.
-				</p>
-			</div>
-
-			<div class="footer">
-				<p>Powered by mini-interaction</p>
-				<p>
-					Your data is only used for Discord linked roles verification
-				</p>
-			</div>
+			<div class="spinner"></div>
+			<h1>REDIRECTING...</h1>
 		</div>
 
 		<script>
-			// Generate OAuth URL when button is clicked
-			document
-				.getElementById("connectButton")
-				.addEventListener("click", async (e) => {
-					e.preventDefault();
+			// OAuth URL will be injected here by the server
+			const oauthUrl = "{{OAUTH_URL}}";
 
-					// Show loading state
-					const button = e.target;
-					const originalText = button.textContent;
-					button.textContent = "⏳ Generating link...";
-					button.style.pointerEvents = "none";
-
-					try {
-						// Fetch OAuth URL from our API endpoint
-						const response = await fetch("/api/get-oauth-url");
-
-						if (!response.ok) {
-							throw new Error("Failed to generate OAuth URL");
-						}
-
-						const data = await response.json();
-
-						// Redirect to Discord OAuth
-						window.location.href = data.url;
-					} catch (error) {
-						console.error("Error generating OAuth URL:", error);
-						button.textContent = "❌ Error - Try again";
-						button.style.pointerEvents = "auto";
-
-						setTimeout(() => {
-							button.textContent = originalText;
-						}, 3000);
-					}
-				});
+			// Redirect immediately
+			if (oauthUrl && oauthUrl !== "{{OAUTH_URL}}") {
+				window.location.href = oauthUrl;
+			} else {
+				document.querySelector("h1").textContent = "ERROR";
+			}
 		</script>
 	</body>
 </html>
