@@ -1,5 +1,16 @@
-node_modules
-/dist
-.env
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS / Editor junk
 .DS_Store
-.vercel
+Thumbs.db
+.idea/
+.vscode/
