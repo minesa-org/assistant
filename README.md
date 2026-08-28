@@ -1,59 +1,230 @@
-# Mini App Template (mini-interaction ≥ 0.10)
+# 🌌 Mini Interaction
 
-Starter template for Discord HTTP-interaction apps built on **auto-discovery**:
-drop handler files into `src/commands`, `src/components` or `src/modals` and
-`MiniInteraction` picks them up automatically — no manual router wiring needed.
+> **Sleek, Modular, and Type-Safe Discord Interactions Framework.**
 
-## What's inside
+Mini Interaction is a high-performance framework designed for building Discord HTTP/Webhook-based bots. It provides a modular architecture that separates concerns, making your bot easier to maintain, test, and scale.
 
-| Path | Purpose |
-| --- | --- |
-| `api/interactions.ts` | 3-line interactions endpoint — `MiniInteraction` handles everything |
-| `api/index.ts` | Linked-roles landing page (`index.html`) |
-| `api/discord-oauth-callback.ts` | OAuth2 callback: stores tokens in `MiniDatabase`, updates role metadata |
-| `src/commands/ping.ts` | `/ping` — Components V2 container + section + button |
-| `src/commands/echo.ts` | `/echo` — typed option resolver demo |
-| `src/components/ping_button.ts` | Button → modal with a modal-side select menu |
-| `src/components/ping_menu.ts` | Select menu component handler |
-| `src/modals/ping_modal.ts` | Modal submit handler |
-| `scripts/register.ts` | Registers commands & linked-role metadata via `mini.registerCommands()` |
+---
 
-## 1. Prepare
+## ✨ Features
 
-```bash
-npm install
-cp env.example .env   # then fill in the values
-```
+- **🚀 Modular Router**: Easily map commands, components, and modals to handlers.
+- **⚡ Core V10 Engine**: Native support for Discord API v10 payloads.
+- **🛡️ Type Safety**: Full TypeScript support with rich autocompletion.
+- **🧩 Fluent Builders**: Construct complex messages and components with a premium API.
+- **🔐 Integrated OAuth**: Simple handlers for Discord OAuth2 flows.
+- **🗃️ Mini Database**: Lightweight, document-based storage integration.
 
-## 2. Register commands & metadata
+---
+
+## 📦 Installation
 
 ```bash
-npm run register
+npm install @minesa-org/mini-interaction
 ```
 
-Set `DISCORD_GUILD_ID` to register instantly on one guild; leave it unset for
-global registration.
+---
 
-## 3. Deploy to Vercel
+## 🛠️ Quick Start
 
-```bash
-npm install -g vercel
-vercel login && vercel link
-vercel --prod
+Mini Interaction uses a modular approach with a dedicated Router and Context.
+
+### 1. Define your Router
+```ts
+import { InteractionRouter } from '@minesa-org/mini-interaction';
+
+const router = new InteractionRouter();
+
+// Register a slash command
+router.onCommand('ping', async (interaction, ctx) => {
+  return ctx.reply({ content: '🏓 Pong!' });
+});
+
+// Register a component handler
+router.onComponent('my_button', async (interaction, ctx) => {
+  return ctx.reply({ content: 'Button clicked!', ephemeral: true });
+});
 ```
 
-Then in the [Developer Portal](https://discord.com/developers/applications):
+### 2. Handle Interactions
+```ts
+import { 
+  verifyAndParseInteraction, 
+  InteractionContext, 
+  DiscordRestClient 
+} from '@minesa-org/mini-interaction';
 
-- **Interactions Endpoint URL** → `https://<your-app>/api/interactions`
-- **OAuth2 redirect** → `https://<your-app>/api/discord-oauth-callback`
+const rest = new DiscordRestClient({ 
+  applicationId: process.env.DISCORD_APP_ID, 
+  token: process.env.DISCORD_TOKEN 
+});
 
-> [!TIP]
-> Importing the repository into Vercel and adding the environment variables is
-> even easier — no CLI needed.
+// In your web server (e.g., Next.js, Vercel, Express)
+export async function POST(req) {
+  const body = await req.text();
+  const signature = req.headers.get('x-signature-ed25519');
+  const timestamp = req.headers.get('x-signature-timestamp');
 
-## Adding features
+  // Verify and parse the interaction
+  const interaction = await verifyAndParseInteraction({
+    body,
+    signature,
+    timestamp,
+    publicKey: process.env.DISCORD_PUBLIC_KEY
+  });
 
-1. Create a handler file under `src/commands`, `src/components` or `src/modals`
-   (see any existing file for the shape).
-2. Add the command payload to `scripts/register.ts`.
-3. That's it — `MiniInteraction` auto-discovers new files on the next request.
+  if (interaction.type === 1) return Response.json({ type: 1 });
+
+  const ctx = new InteractionContext({ interaction, rest });
+  const response = await router.dispatch(interaction, ctx);
+
+  return Response.json(response ?? ctx.deferReply());
+}
+```
+
+---
+
+## 🎨 Message Builders
+
+Mini Interaction provides a rich set of builders to create beautiful Discord content.
+
+```ts
+import { ModalBuilder, TextInputBuilder, TextInputStyle } from '@minesa-org/mini-interaction';
+
+const modal = new ModalBuilder()
+  .setCustomId('feedback_form')
+  .setTitle('Send us Feedback')
+  .addComponents(
+    new TextInputBuilder()
+      .setCustomId('feedback_text')
+      .setLabel('Your Message')
+      .setStyle(TextInputStyle.Paragraph)
+      .setPlaceholder('Tell us what you think...')
+  );
+```
+
+---
+
+## 📡 Advanced Routing
+
+You can organize your handlers into separate modules for better scalability.
+
+```ts
+// components/modals.ts
+router.onModal('feedback_submit', async (interaction, ctx) => {
+  const feedback = interaction.getTextFieldValue('feedback_text');
+  // Process feedback...
+  return ctx.reply({ content: 'Thank you for your feedback!' });
+});
+```
+
+---
+
+## 🛡️ Error Handling
+
+Mini Interaction includes built-in validation to ensure your payloads follow Discord's requirements.
+
+```ts
+import { ValidationError } from '@minesa-org/mini-interaction';
+
+try {
+  const builder = new TextInputBuilder().setCustomId(''); // Too short!
+  builder.toJSON();
+} catch (error) {
+  if (error instanceof ValidationError) {
+    console.error(`Validation failed for ${error.component}: ${error.message}`);
+  }
+}
+```
+
+---
+
+## 🔗 Linked Role Metadata
+
+Register application role connection metadata with `mini.registerMetadata(...)`.
+
+```ts
+import {
+  MiniInteraction,
+  RoleConnectionMetadataTypes,
+} from '@minesa-org/mini-interaction';
+
+const mini = new MiniInteraction({
+  applicationId: process.env.DISCORD_APPLICATION_ID,
+});
+
+await mini.registerMetadata(process.env.DISCORD_BOT_TOKEN!, [
+  {
+    key: 'is_miniapp',
+    name: 'Is Mini App?',
+    description: 'Is the user an assistant?',
+    type: RoleConnectionMetadataTypes.BooleanEqual,
+  },
+]);
+```
+
+Localization maps use `locale -> string` objects for `name_localizations` and `description_localizations`.
+
+```ts
+await mini.registerMetadata(process.env.DISCORD_BOT_TOKEN!, [
+  {
+    key: 'is_miniapp',
+    name: 'Is Mini App?',
+    description: 'Is the user an assistant?',
+    type: RoleConnectionMetadataTypes.BooleanEqual,
+    name_localizations: {
+      tr: 'Mini Uygulama mi?',
+      de: 'Ist Mini-App?',
+    },
+    description_localizations: {
+      tr: 'Kullanici bir assistant mi?',
+      de: 'Benutzer ist ein Assistent?',
+    },
+  },
+]);
+```
+
+---
+
+## ✍️ Text Formatting
+
+Compose Discord markdown with pure helper functions:
+
+```ts
+import {
+  bold, italic, heading, codeBlock, spoiler, timestamp,
+  userMention, bulletList, maskLink,
+} from '@minesa-org/mini-interaction';
+
+const content = [
+  heading(`Welcome ${userMention(userId)}!`, 2),
+  italic(bold('Enjoy your stay.')),
+  bulletList([spoiler('secret tip'), maskLink('Docs', 'https://example.com')]),
+  `Event starts ${timestamp(eventDate, 'R')}`,
+].join('\n');
+```
+
+---
+
+## 🧵 Messaging Helpers
+
+```ts
+// Create a thread directly in a channel (e.g. forum posts)
+await rest.createThread({ channelId, name: 'Weekly discussion', type: ChannelType.PublicThread });
+
+// Send, then chain follow-up actions
+const msg = await rest.sendMessage({ channelId, content: 'Hello!' });
+await msg.react('🎉');
+await msg.reply('Hi back!');
+await msg.pin();
+await msg.edit({ content: 'Edited!' });
+
+// Webhook messages
+await rest.sendWebhookMessage(webhookId, webhookToken, { content: 'Via webhook' });
+```
+
+---
+
+## 📜 License
+
+MIT © [Minesa](https://github.com/minesa-org)

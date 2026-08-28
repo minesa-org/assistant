@@ -1,18 +1,16 @@
 {
 	"compilerOptions": {
-		"target": "ES2022",
-		"module": "ES2022",
-		"moduleResolution": "bundler",
-		"allowImportingTsExtensions": true,
-		"noEmit": true,
+		"target": "esnext",
+		"module": "nodenext",
+		"moduleResolution": "nodenext",
+		"outDir": "dist",
+		"rootDir": "src",
+		"declaration": true,
 		"strict": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
-		"skipLibCheck": true,
-		"resolveJsonModule": true,
-		"allowSyntheticDefaultImports": true,
-		"types": ["node"]
+		"skipLibCheck": true
 	},
-	"include": ["src/**/*.ts", "api/**/*.ts", "scripts/**/*.ts"],
-	"exclude": ["dist", "node_modules"]
+	"include": ["src"],
+	"exclude": ["node_modules", "dist"]
 }
